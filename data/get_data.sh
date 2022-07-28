@@ -7,4 +7,5 @@ TPCH_SCALE_FACTOR=${1:?You MUST provide the TPC-H Scale Factor!}
 
 echo "TPCH_SCALE_FACTOR=${TPCH_SCALE_FACTOR}"
 
-gsutil -m cp -r gs://tpch-dataset/${TPCH_SCALE_FACTOR} ./
+mkdir -p ./"${TPCH_SCALE_FACTOR}"
+gsutil -m rsync -r gs://tpch-dataset/"${TPCH_SCALE_FACTOR}" ./"${TPCH_SCALE_FACTOR}"
