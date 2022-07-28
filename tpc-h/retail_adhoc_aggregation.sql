@@ -8,6 +8,10 @@ Purpose:  This query against TPC-H is intended to perform an adhoc aggregation
           groups by the customer identifier in order to determine repeat customers.
 
 ------------------------------------------------------------------------- */
+
+EXPLAIN ANALYZE
+CREATE OR REPLACE TEMPORARY TABLE aggregation_results_temp
+AS
 WITH starting_dataset AS (
     SELECT customer_region.r_regionkey AS customer_region_key
          , customer_region.r_name AS customer_region_name
