@@ -105,6 +105,7 @@ WITH starting_dataset AS (
          , date_aggregation_dim.ancestor_node_id
          , date_aggregation_dim.ancestor_node_name
          , date_aggregation_dim.ancestor_node_sort_order
+         --
          , facts.customer_key /* We group by customer here so we can determine the repeat customer count */
 )
 SELECT customer_level_name
@@ -117,7 +118,7 @@ SELECT customer_level_name
      , date_node_name
      --
      , COUNT (/* DISTINCT */ customer_key) AS count_distinct_customers /* We do NOT need DISTINCT here b/c we grouped by all keys WITH customer_key in the previous block */
-     , COUNT (/* DISTINCT */ CASE WHEN count_distinct_orders > 1 THEN 1 END) AS count_distinct_repeat_customers
+     , COUNT (/* DISTINCT */ CASE WHEN count_distinct_orders > 1 THEN customer_key END) AS count_distinct_repeat_customers
      , SUM (count_distinct_orders) AS count_distinct_orders /* We can simply SUM here b/c we grouped by all keys WITH customer_key in the previous block */
      , SUM (sum_quantity) AS sum_quantity
      , SUM (sum_extended_price) AS sum_extended_price
